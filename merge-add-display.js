@@ -11,17 +11,21 @@ function buildHTMLAdd(){
 	var sHtmlReturn = getCSS();
 	sQuery = sccm.doSelect('true');
 	dQuery = device.doSelect('true');
+	//joinQuery = joinpc.doSelect('true')
 	//joinQuery = joinpc.doSelect('true');
 	do{
+		// if((sccm['SerialNumber0']!=device['serial.no.'])&&(device['logical.name']==joinpc['logical.name'])){
 		if(sccm['SerialNumber0']!=device['serial.no.']){
 			data[cnt] = {ResourceID:sccm['ResourceID'],SerialNumber0:sccm['SerialNumber0'],Manufacturer00:sccm['Manufacturer00'],Model00:sccm['Model00'],Name00:sccm['Name00'],UserName00:sccm['UserName00'],ProcName00:sccm['ProcName00'],NumberOfCores00:sccm['NumberOfCores00'],NumberOfLogicalProcessors00:sccm['NumberOfLogicalProcessors00'],IPAddress00:sccm['IPAddress00'],MACAddress00:sccm['MACAddress00'],Size00:sccm['Size00']};
 			cnt++;
 		}
-	}while(sccm.getNext == RC_SUCCESS && device.getNext == RC_SUCCESS);
-
+	}while(sccm.getNext() == RC_SUCCESS && device.getNext() == RC_SUCCESS /*&& joinpc.getNext == RC_SUCCESS*/);
+	print(cnt);
+	//sHtmlReturn += "<h1> Новые ЭК </h1>"
 	sHtmlReturn += "<table class=\"main\">" + sCR;
 	// Table header
-	sHtmlReturn += "<tr><th><div tabindex=\"0\"> ResourceID </div></th>"
+	sHtmlReturn += "<tr><th><div tabindex=\"0\"> Test </div></th>"
+	sHtmlReturn += "<th><div tabindex=\"0\"> ResourceID </div></th>"
 	sHtmlReturn += "<th><div tabindex=\"0\"> Серийный номер </div></th>"
 	sHtmlReturn += "<th><div tabindex=\"0\"> Производетель </div></th>"
 	sHtmlReturn += "<th><div tabindex=\"0\"> Модель </div></th>";
@@ -36,6 +40,7 @@ function buildHTMLAdd(){
 	for (var i =0; i<data.length; i++) {
 		var sRowClass = i%2==0 ? "evenRow" : "oddRow";
 			sHtmlReturn += "<tr>";
+			 sHtmlReturn += "<td class=\""+sRowClass+"\" > <a href=javascript:void(0)> test </a></td>";
 			if(data[i]['ResourceID']!=null){
 				sHtmlReturn += "<td class=\""+sRowClass+"\" >"+data[i]['ResourceID']+"</td>";		//ResourceID
 			}
