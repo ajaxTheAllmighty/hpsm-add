@@ -1,5 +1,11 @@
-	//'SerialNumber0','ResourceID',	'Manufacturer00',	'Model00',	'Name00', 	'UserName00',	'ProcName00',      	'NumberOfCores00', 	'NumberOfLogicalProcessors00',	'IPAddress00',	'MACAddress00',	'Size00'
-	//'serial.no.',   				'vendor',    	  	'model',  	'ci.name',	'users',     	'processors.model',	'processors.cores',	'processors.proc',            	'ip.address', 	'mac.address', 	'hdd.capacity'
+//'SerialNumber0','ResourceID',	'Manufacturer00',	'Model00',	'Name00', 	'UserName00',	'ProcName00',      	'NumberOfCores00', 	'NumberOfLogicalProcessors00',	'IPAddress00',	'MACAddress00',	'Size00'
+//'serial.no.',   				'vendor',    	  	'model',  	'ci.name',	'users',     	'processors.model',	'processors.cores',	'processors.proc',            	'ip.address', 	'mac.address', 	'hdd.capacity'
+//$L.void=jscall("testProg3.testLink", $L.linktable, $L.linkquery)
+
+
+// QUESTION: При наполнении lfile не заполняются поля proc,hdd и тд. из joinpc
+
+
 function buildHTMLAdd(){
 	var sccm = new SCFile('sccmHardware');
 	var device = new SCFile('device');
@@ -40,7 +46,8 @@ function buildHTMLAdd(){
 	for (var i =0; i<data.length; i++) {
 		var sRowClass = i%2==0 ? "evenRow" : "oddRow";
 			sHtmlReturn += "<tr>";
-			 sHtmlReturn += "<td class=\""+sRowClass+"\" > <a href=javascript:void(0)> test </a></td>";
+//<a href=\"scactivelink://cirelationship:" + lib.timeperiod.codeLink("logical.name=&quot;" + arr[i] + "&quot;", "en") + "\">" + attrib[j] + "</a></td>";
+			 sHtmlReturn += "<td class=\""+sRowClass+"\" > <a href=\"scactivelink://sccmHardware:"+data[i]['ResourceID']+"\">Добавить</a></td>";
 			if(data[i]['ResourceID']!=null){
 				sHtmlReturn += "<td class=\""+sRowClass+"\" >"+data[i]['ResourceID']+"</td>";		//ResourceID
 			}
@@ -60,7 +67,7 @@ function buildHTMLAdd(){
 				sHtmlReturn += "<td class=\""+sRowClass+"\" > </td>";
 			}
 			if(data[i]['Model00']!=null){
-				sHtmlReturn += "<td class=\""+sRowClass+"\" >"+data[i]['Model00.name']+"</td>";		//Model00
+				sHtmlReturn += "<td class=\""+sRowClass+"\" >"+data[i]['Model00']+"</td>";		//Model00
 			}
 			else{
 				sHtmlReturn += "<td class=\""+sRowClass+"\" > </td>";
@@ -72,7 +79,7 @@ function buildHTMLAdd(){
 				sHtmlReturn += "<td class=\""+sRowClass+"\" > </td>";
 			}
 			if(data[i]['UserName00']!=null){
-				sHtmlReturn += "<td class=\""+sRowClass+"\" >"+data[i]['UserName00']+"</td>";		//UserName00
+				sHtmlReturn += "<td class=\""+sRowClass+"\" >"+data[i]['UserName00'].replace('ERG\\','')+"</td>";		//UserName00
 			}
 			else{
 				sHtmlReturn += "<td class=\""+sRowClass+"\" > </td>";
